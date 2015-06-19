@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:background="#9090ff">
+<ImageView
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/img_titulo"
+        android:layout_gravity="center"
+        android:src="@drawable/login_icon"
+        android:paddingBottom="200dp"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLines="1"
+        android:id="@+id/user"
+        android:textColorHint="#DDFFFFFF"
+        android:hint="Usuario"
+        android:layout_marginBottom="150dp"
+        android:layout_alignBottom="@+id/img_titulo"
+        android:layout_centerInParent="true"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:id="@+id/password"
+        android:layout_marginTop="-150dp"
+        android:textColorHint="#FFFFFF"
+        android:hint="Password"
+        android:layout_below="@+id/user"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="Ingresar"
+        android:id="@+id/btnLogin"
+        android:onClick="clickLogin"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/borde_redondeado"
+        android:layout_marginTop="20dp"
+        />
+    <Button
+        android:id="@+id/btnToRegister"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dip"
+        android:layout_below="@+id/btnLogin"
+        android:background="@null"
+        android:layout_centerHorizontal="true"
+        android:onClick="clickToRegistrarUser"
+        android:text="@string/btn_a_registrar"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+</RelativeLayout>

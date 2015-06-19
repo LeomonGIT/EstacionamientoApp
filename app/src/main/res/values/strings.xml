@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_tipo_user">Seleccione tipo de Usuario:</string>
+    <string name="button_off">EMPRESA</string>
+    <string name="button_on">CLIENTE</string>
+    <string name="title_section1">Item 1</string>
+    <string name="title_section2">Item 2</string>
+    <string name="title_section3">Item 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Detalle</string>
+    <string name="openDrawer">openDrawer</string>
+    <string name="closeDrawer">closeDrawer</string>
+    <string name="app_name">EstacionApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_map">Maps</string>
+    <string name="title_activity_registrar_user">Registrar</string>
+
+    <string name="btn_login">INGRESAR</string>
+    <string name="btn_register">REGISTRAR</string>
+    <string name="btn_a_registrar">No eres miembro?. Regístrate ahora.</string>
+    <string name="btn_a_login">Ya estoy registrado! Ingresar!.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
+    <!-- REGISTRAR USUARIO-->
+    <string name="hint_name">Nombre Completo</string>
+    <string name="hint_username">Usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_cellphone">Celular</string>
+    <string name="hint_dni">DNI</string>
+    <string name="hint_email">Correo Electrónico</string>
+    <string name="hint_placa_auto">Placa del Auto</string>
+    <string name="hint_modelo_auto">Modelo del Auto</string>
+    <string name="hint_color_auto">Color del Auto</string>
+
+</resources>
