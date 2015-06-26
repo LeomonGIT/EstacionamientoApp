@@ -15,7 +15,7 @@ import edu.ulima.estacionapp.R;
 
 public class MapActivity extends Fragment {
 
-    private GoogleMap mMap;
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

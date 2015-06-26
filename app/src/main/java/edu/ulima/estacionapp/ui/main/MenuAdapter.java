@@ -1,9 +1,10 @@
 package edu.ulima.estacionapp.ui.main;
 
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -66,32 +67,30 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
             Fragment fragment = null;
             int position = getPosition();
+            String title="";
+            Bundle args = new Bundle();
             switch(position) {
-
+                default:
+                    break;
                 case 0:
                     //fragment = new Fragment_items();
                     //posicion del perfil
                     break;
                 case 1:
                     fragment = new MapActivity();
-                    fm.beginTransaction()
-                            .replace(R.id.container, fragment)
-                            .commit();
+                    args.putInt("key", position);
                     break;
-                case 2:
-                    /*fragment = new Fragment_items();
-                    args.putInt("key", position);*/
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
+                /*case 2:
+                    fragment = new Fragment_items();
+                    args.putInt("key", position);
+                    break;*/
             }
+            fragment.setArguments(args);
+            fm.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .commit();
             Toast.makeText(contxt," es: "+getPosition(),Toast.LENGTH_SHORT).show();
             Drawer.closeDrawers();
-
         }
     }
 

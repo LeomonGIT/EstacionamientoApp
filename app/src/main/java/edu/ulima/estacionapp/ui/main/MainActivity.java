@@ -40,9 +40,9 @@ public class MainActivity extends ActionBarActivity {
         instance=UserController.getInstance();
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        startUser();
         fm =getSupportFragmentManager();
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);
+        startUser();
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);

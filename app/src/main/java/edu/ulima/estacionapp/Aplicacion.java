@@ -14,6 +14,5 @@ public class Aplicacion extends Application {
 
         Parse.initialize(this, "M1eNpD5WHq4zNrPb5RcS1qebV2H1ycg5bQYAL6BQ", "6Bo2dRVxVXIySOWhtUWOK7LUXC8vhoiTjPBee491");
 
-        //se
     }
 }
