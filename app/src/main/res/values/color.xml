@@ -15,6 +15,6 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
-    <color name="user_cliente">#2196f3</color>
+    <color name="user_cliente">#8484ff</color>
     <color name="user_business">#009688</color>
 </resources>
