@@ -85,8 +85,8 @@ public class MainActivity extends ActionBarActivity {
                 int ICONS0[] = {R.drawable.ic_home, R.drawable.ic_events,R.drawable.ic_mail};
                 mAdapter = new MenuAdapter(TITLES0,ICONS0,NAME,EMAIL,PROFILE,this,fm,Drawer);
                 fragment = new MapActivity();
-                //
-                // fm.beginTransaction().replace(R.id.container, fragment).commit();
+
+                 fm.beginTransaction().replace(R.id.container, fragment).commit();
 
 
                 break;

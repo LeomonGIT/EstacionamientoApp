@@ -80,8 +80,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     break;
                 case 1:
                     if(UserController.getInstance().getUsuario().getType()==0)
-                        //fragment = new MapActivity();
-                        intent = new Intent(contxt,ClienteVerReservasActivity.class);
+                    //intent = new Intent(contxt,ClienteVerReservasActivity.class);
+                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
                     else
                         intent = new Intent(contxt,RegEstacionamientoActivity.class);
                     break;

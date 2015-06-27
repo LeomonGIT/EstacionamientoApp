@@ -83,15 +83,15 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
         ParseGeoPoint point = new ParseGeoPoint(addMarker.getPosition().latitude,addMarker.getPosition().longitude);
 
         ParseObject estacionamiento = new ParseObject("Empresa");
-        estacionamiento.put("capacidad", txtCapacidad.getText().toString());
-        estacionamiento.put("tarifa", txtTarifa.getText().toString());
+        estacionamiento.put("capacidad", Integer.parseInt(txtCapacidad.getText().toString()));
+        estacionamiento.put("tarifa", Integer.parseInt(txtTarifa.getText().toString()));
         estacionamiento.put("ubicacion",point);
         estacionamiento.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(RegEstacionamientoActivity.this, "Registrado!", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    //onBackPressed();
                 }
                 else
                     Toast.makeText(RegEstacionamientoActivity.this, "No se pudo registrar", Toast.LENGTH_SHORT).show();
@@ -106,7 +106,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         Log.e("optionPress","presionado");
-        if (id == R.id.home) {
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }
