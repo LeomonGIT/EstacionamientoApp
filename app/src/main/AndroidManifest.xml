@@ -48,8 +48,8 @@
         </activity>
         <activity
             android:name=".ui.items.RegEstacionamientoActivity"
-            android:theme="@style/AppThemeItem"
-            android:label="@string/title_activity_reg_estacionamiento" >
+            android:label="@string/title_activity_reg_estacionamiento"
+            android:theme="@style/AppThemeItem" >
         </activity>
     </application>
 
