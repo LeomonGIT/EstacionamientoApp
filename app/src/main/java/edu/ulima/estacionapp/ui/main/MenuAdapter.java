@@ -1,6 +1,7 @@
 package edu.ulima.estacionapp.ui.main;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.ulima.estacionapp.R;
-import edu.ulima.estacionapp.ui.items.MapActivity;
+import edu.ulima.estacionapp.Servicios.UserController;
+import edu.ulima.estacionapp.ui.items.ClienteVerReservasActivity;
+import edu.ulima.estacionapp.ui.items.RegEstacionamientoActivity;
 
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
@@ -65,31 +68,37 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-            Fragment fragment = null;
+            Intent intent=null;
+            //Fragment fragment = null;
             int position = getPosition();
             String title="";
             Bundle args = new Bundle();
             switch(position) {
-                default:
-                    break;
                 case 0:
                     //fragment = new Fragment_items();
                     //posicion del perfil
                     break;
                 case 1:
-                    fragment = new MapActivity();
-                    args.putInt("key", position);
+                    if(UserController.getInstance().getUsuario().getType()==0)
+                        //fragment = new MapActivity();
+                        intent = new Intent(contxt,ClienteVerReservasActivity.class);
+                    else
+                        intent = new Intent(contxt,RegEstacionamientoActivity.class);
                     break;
-                /*case 2:
-                    fragment = new Fragment_items();
-                    args.putInt("key", position);
-                    break;*/
+                case 2:
+                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
+                    break;
             }
-            fragment.setArguments(args);
-            fm.beginTransaction()
+            if(intent !=null)
+                v.getContext().startActivity(intent);
+                //v.startActivities(intent);
+            /*if(fm!=null)
+                fm.beginTransaction()
                     .replace(R.id.container, fragment)
-                    .commit();
-            Toast.makeText(contxt," es: "+getPosition(),Toast.LENGTH_SHORT).show();
+                    .commit();*/
             Drawer.closeDrawers();
         }
     }

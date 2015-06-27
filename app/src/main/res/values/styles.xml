@@ -16,4 +16,10 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
     </style>
+
+    <!-- Items Activities -->
+    <style name="AppThemeItem" parent="Theme.AppCompat.Light" >
+        <item name="colorPrimary">@color/ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
+    </style>
 </resources>

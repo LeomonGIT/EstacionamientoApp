@@ -37,5 +37,6 @@
     <string name="hint_color_auto">Color del Auto</string>
     <string name="title_activity_cliente_ver_reservas">Reservas</string>
     <string name="title_activity_empresa_lista_reservas_fragment">Listado Reservas</string>
+    <string name="title_activity_reg_estacionamiento">Estacionamiento</string>
 
 </resources>

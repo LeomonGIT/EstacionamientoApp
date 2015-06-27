@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerDrawer"
     android:layout_width="match_parent"
     android:layout_height="178dp"
-    android:background="@drawable/background_poly"
+    android:background="@color/ColorPrimary"
     android:orientation="vertical"
     android:weightSum="1">
     <LinearLayout

@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 1:
                 toolbar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.user_business)));
-                String TITLES1[] = {"Gestionar Reservas","Gestionar Locales","Registrar Promocion(es)","Logout"};
+                String TITLES1[] = {"Estacionamiento","Gestionar Reservas","Registrar Promocion(es)","Logout"};
                 int ICONS1[] = {R.drawable.ic_home, R.drawable.ic_events,R.drawable.ic_mail,R.drawable.ic_shop};
                 mAdapter = new MenuAdapter(TITLES1,ICONS1,NAME,EMAIL,PROFILE,this,fm,Drawer);
                 fragment = new EmpresaListaReservasFragment();
