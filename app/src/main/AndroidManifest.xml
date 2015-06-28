@@ -51,6 +51,10 @@
             android:label="@string/title_activity_reg_estacionamiento"
             android:theme="@style/AppThemeItem" >
         </activity>
+        <activity
+            android:name=".ui.items.ReservarActivity"
+            android:label="@string/title_activity_reservar" >
+        </activity>
     </application>
 
 </manifest>

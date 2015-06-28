@@ -76,7 +76,9 @@ public class LoginActivity extends ActionBarActivity {
                 public void done(ParseUser parseUser, ParseException e) {
                     if (parseUser != null){
                         controlador.setUsuario(new Usuario(parseUser.getUsername(),parseUser.getEmail(),parseUser.getInt("type")));
+                        Log.e("setearid user", parseUser.getObjectId().toString());
                         controlador.getUsuario().setId(parseUser.getObjectId().toString());
+                        Log.e("verificar id user", controlador.getUsuario().getId());
                         login(controlador.getUsuario());
                     }else
                         Toast.makeText(LoginActivity.this,"Usuario y/o Clave no valido",Toast.LENGTH_LONG).show();
@@ -88,9 +90,6 @@ public class LoginActivity extends ActionBarActivity {
             Toast.makeText(this,"Campos no pueden ser vacios",Toast.LENGTH_SHORT).show();
             pd.dismiss();
         }
-
-
-
     }
     private void login(Usuario user){
         Intent i=null;

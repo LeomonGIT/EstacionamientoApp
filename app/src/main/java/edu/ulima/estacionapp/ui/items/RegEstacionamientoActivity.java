@@ -1,10 +1,12 @@
 package edu.ulima.estacionapp.ui.items;
 
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +34,6 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
 
     private EditText txtCapacidad,txtTarifa;
     private GoogleMap googleMap;
-    private double longitud,latitud;
     private MarkerOptions marker;
     public  Marker addMarker=null;
     UserController controlador;
@@ -41,7 +42,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg_estacionamiento);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        controlador=UserController.getInstance();
         //Inicializando widgets
         txtCapacidad = (EditText) findViewById(R.id.regCapacidad);
         txtTarifa = (EditText) findViewById(R.id.regTarifa);
@@ -50,6 +51,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
         marker = new MarkerOptions();
         iniciarPosition();
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.user_business)));
 
         //logica getPositionOnTouchMap
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {

@@ -2,6 +2,7 @@ package edu.ulima.estacionapp.ui.main;
 
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +36,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     static FragmentManager fm;
     static DrawerLayout Drawer;
     static private View vista;
+    static private int USER_TYPE;
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int Holderid;
         TextView textView;
-
+        RelativeLayout header;
         ImageView imageView;
         ImageView profile;
         TextView Name;
@@ -58,6 +61,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 Holderid = 1;
             }
             else{
+                header = (RelativeLayout) itemView.findViewById(R.id.headerDrawer);
+                if(USER_TYPE==1)
+                    header.setBackgroundDrawable(new ColorDrawable(itemView.getResources().getColor(R.color.user_business)));
                 Name = (TextView) itemView.findViewById(R.id.name);
                 email = (TextView) itemView.findViewById(R.id.email);
                 profile = (ImageView) itemView.findViewById(R.id.circleView);
@@ -79,7 +85,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     //posicion del perfil
                     break;
                 case 1:
-                    if(UserController.getInstance().getUsuario().getType()==0)
+                    if(USER_TYPE==0)
                     //intent = new Intent(contxt,ClienteVerReservasActivity.class);
                     Toast.makeText(contxt,"Proximamente.",Toast.LENGTH_SHORT).show();
                     else
@@ -104,6 +110,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     MenuAdapter(String Titles[], int Icons[], String Name, String Email, int Profile, Context passedContext, FragmentManager fm, DrawerLayout Drawer){
+        this.USER_TYPE=UserController.getInstance().getUsuario().getType();
         mNavTitles = Titles;
         mIcons = Icons;
         name = Name;

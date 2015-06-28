@@ -43,4 +43,5 @@
     <string name="hint_capacidad">Capacidad de Vehículos</string>
     <string name="hint_tarifa">Tarifa por Hora</string>
     <string name="label_ubicacion">Ubicación</string>
+    <string name="title_activity_reservar">Reservar</string>
 </resources>
