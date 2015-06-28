@@ -76,6 +76,7 @@ public class LoginActivity extends ActionBarActivity {
                 public void done(ParseUser parseUser, ParseException e) {
                     if (parseUser != null){
                         controlador.setUsuario(new Usuario(parseUser.getUsername(),parseUser.getEmail(),parseUser.getInt("type")));
+                        controlador.getUsuario().setId(parseUser.getObjectId().toString());
                         login(controlador.getUsuario());
                     }else
                         Toast.makeText(LoginActivity.this,"Usuario y/o Clave no valido",Toast.LENGTH_LONG).show();

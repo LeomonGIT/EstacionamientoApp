@@ -18,12 +18,15 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import edu.ulima.estacionapp.R;
+import edu.ulima.estacionapp.Servicios.UserController;
 
 public class RegEstacionamientoActivity extends ActionBarActivity {
 
@@ -32,6 +35,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
     private double longitud,latitud;
     private MarkerOptions marker;
     public  Marker addMarker=null;
+    UserController controlador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +84,35 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
     public void clickRegEstacionamiento(View v){
 
         Toast.makeText(RegEstacionamientoActivity.this, "Registrando...Espere un momento", Toast.LENGTH_LONG).show();
-        ParseGeoPoint point = new ParseGeoPoint(addMarker.getPosition().latitude,addMarker.getPosition().longitude);
+        final ParseGeoPoint point = new ParseGeoPoint(addMarker.getPosition().latitude,addMarker.getPosition().longitude);
 
-        ParseObject estacionamiento = new ParseObject("Empresa");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+
+// Retrieve the object by id
+        Log.e("getId() regEst",controlador.getUsuario().getId());
+        query.getInBackground(controlador.getUsuario().getId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject estacionamiento, ParseException e) {
+                if (e == null) {
+                    estacionamiento.put("capacidad", Integer.parseInt(txtCapacidad.getText().toString()));
+                    estacionamiento.put("tarifa", Integer.parseInt(txtTarifa.getText().toString()));
+                    estacionamiento.put("ubicacion",point);
+                    estacionamiento.put("disponible",Integer.parseInt(txtCapacidad.getText().toString()));
+                    estacionamiento.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(RegEstacionamientoActivity.this, "Registrado!", Toast.LENGTH_SHORT).show();
+                                //onBackPressed();
+                            }
+                            else
+                                Toast.makeText(RegEstacionamientoActivity.this, "No se pudo registrar", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        /*ParseObject estacionamiento = new ParseObject("Empresa");
         estacionamiento.put("capacidad", Integer.parseInt(txtCapacidad.getText().toString()));
         estacionamiento.put("tarifa", Integer.parseInt(txtTarifa.getText().toString()));
         estacionamiento.put("ubicacion",point);
@@ -97,7 +127,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
                 else
                     Toast.makeText(RegEstacionamientoActivity.this, "No se pudo registrar", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }
