@@ -16,6 +16,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 import edu.ulima.estacionapp.R;
 
@@ -30,36 +37,49 @@ public class MapActivity extends Fragment {
         googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map))
                 .getMap();
 
+        iniciarPosition();
+        getParkingFromParse();
         return myFragmentView;
-    }
-    private SupportMapFragment getMapFragment() {
-        FragmentManager fm = null;
-
-        Log.d("mapAcitvity", "sdk: " + Build.VERSION.SDK_INT);
-        Log.d("mapAcitvity", "release: " + Build.VERSION.RELEASE);
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Log.d("mapAcitvity", "using getFragmentManager");
-            fm = getFragmentManager();
-        } else {
-            Log.d("mapAcitvity", "using getChildFragmentManager");
-            fm = getChildFragmentManager();
-        }
-
-        return (SupportMapFragment) fm.findFragmentById(R.id.map);
     }
 
     private void iniciarPosition() {
         googleMap.setMyLocationEnabled(true);
-
         googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                //LatLng currentLocation = new LatLng(googleMap.getMyLocation().getLatitude(),googleMap.getMyLocation().getLongitude());
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
             }
         });
     }
 
+    private void getParkingFromParse(){
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Empresa");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(final List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < objects.size(); i++) {
+                        addMarker(objects.get(i));
+                    }
+                } else {
+                    Log.e("parseEmpresa","error buscando objectos de empresa");
+                    // something went wrong
+                }
+            }
+        });
+    }
+
+    private void addMarker(final ParseObject parseObject) {
+        try{
+                MarkerOptions marker = new MarkerOptions().position(
+                        new LatLng(parseObject.getParseGeoPoint("ubicacion").getLatitude(),
+                                parseObject.getParseGeoPoint("ubicacion").getLongitude()))
+                        .title(parseObject.get("nombre").toString())
+                        .snippet("Disponibles: "+parseObject.get("disponible").toString());
+                googleMap.addMarker(marker);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -5,7 +5,7 @@ public class Usuario {
     String nombre;
     String correo;
     int type;
-
+    String id;
     public Usuario(){}
     public Usuario(String nombre, String correo, int type) {
         this.nombre = nombre;
@@ -35,5 +35,13 @@ public class Usuario {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

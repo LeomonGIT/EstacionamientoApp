@@ -81,15 +81,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 case 1:
                     if(UserController.getInstance().getUsuario().getType()==0)
                     //intent = new Intent(contxt,ClienteVerReservasActivity.class);
-                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contxt,"Proximamente.",Toast.LENGTH_SHORT).show();
                     else
                         intent = new Intent(contxt,RegEstacionamientoActivity.class);
                     break;
                 case 2:
-                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contxt,"Proximamente.",Toast.LENGTH_SHORT).show();
                     break;
                 default:
-                    Toast.makeText(contxt,"Próximamente.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contxt,"Proximamente.",Toast.LENGTH_SHORT).show();
                     break;
             }
             if(intent !=null)

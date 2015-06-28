@@ -86,6 +86,7 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
         estacionamiento.put("capacidad", Integer.parseInt(txtCapacidad.getText().toString()));
         estacionamiento.put("tarifa", Integer.parseInt(txtTarifa.getText().toString()));
         estacionamiento.put("ubicacion",point);
+        estacionamiento.put("disponible",Integer.parseInt(txtCapacidad.getText().toString()));
         estacionamiento.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

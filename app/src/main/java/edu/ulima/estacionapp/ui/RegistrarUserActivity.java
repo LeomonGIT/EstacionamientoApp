@@ -15,9 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import edu.ulima.estacionapp.Bean.Usuario;
 import edu.ulima.estacionapp.R;
 
 public class RegistrarUserActivity extends ActionBarActivity {
@@ -105,7 +108,8 @@ public class RegistrarUserActivity extends ActionBarActivity {
                 register5.setHint("RUC ");
                 //register6.setHint("Correo Empresa");//quitar
                 register7.setHint("Direccion Sede Principal");
-                register8.setHint("Logo (Opcional)");
+                //register8.setHint("Logo (Opcional)");
+                register8.setVisibility(View.GONE);
                 register9.setVisibility(View.GONE);
                 lblRegisterAuto.setVisibility(View.GONE);
                 break;
@@ -116,38 +120,50 @@ public class RegistrarUserActivity extends ActionBarActivity {
 
     }
     private void registerParse(int type){
+        Toast.makeText(this,"Espere mientras se registra...",Toast.LENGTH_SHORT).show();
         Log.e("user_selected/type",""+USER_SELECTED+"/"+type);
         TextView user = (TextView) findViewById(R.id.register2);
         TextView pass = (TextView)findViewById(R.id.register3);
-        ParseUser userParse = new ParseUser();
+        final ParseUser userParse = new ParseUser();
         userParse.setUsername(user.getText().toString());
         userParse.setPassword(pass.getText().toString());
         userParse.put("type",USER_SELECTED);
         userParse.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(RegistrarUserActivity.this, "Registrado!", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    Log.e("objectId", userParse.getObjectId().toString());
+                    saverUserDetails(userParse);
                 } else {
-                    Toast.makeText(RegistrarUserActivity.this,"Error!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrarUserActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        /*ParseObject userTable = new ParseObject("User");
-        switch (type){
+
+    };
+
+    private void saverUserDetails(ParseUser userParse){
+        ParseObject userTable=null;
+        switch (USER_SELECTED){
             case 0:
-                userTable.put("username", user.getText().toString());
-                userTable.put("password", pass.getText().toString());
-                userTable.put("type", type);
+                userTable = new ParseObject("Cliente");
+                userTable.put("nombre", register1.getText().toString());
+                userTable.put("celular", Integer.parseInt(register4.getText().toString()));
+                userTable.put("dni", register5.getText().toString());
+                userTable.put("placa", register7.getText().toString());
+                userTable.put("modelo", register8.getText().toString());
+                userTable.put("color", register9.getText().toString());
                 break;
             case 1:
-                userTable.put("username", user.getText().toString());
-                userTable.put("password", pass.getText().toString());
-                userTable.put("type", type);
+                userTable= new ParseObject("Empresa");
+                userTable.put("nombre", register1.getText().toString());
+                userTable.put("ruc", register5.getText().toString());
+                userTable.put("direccion", register7.getText().toString());
                 break;
             default:
                 break;
         }
+        Log.e("idUser",userParse.getObjectId());
+        userTable.put("idUser",userParse);
         userTable.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -156,9 +172,8 @@ public class RegistrarUserActivity extends ActionBarActivity {
                     onBackPressed();
                 }
             }
-        });*/
-    };
-
+        });
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
