@@ -125,7 +125,7 @@ public class MapActivity extends Fragment {
         temp.setCapacidad(parseObject.get("capacidad").toString());
         temp.setDisponibilidad(Integer.parseInt(parseObject.get("disponible").toString()));
         temp.setMarkerId(addMarker.getId());
-
+        temp.setPosition(pos);
         empresas.add(temp);
     }
 
