@@ -85,16 +85,14 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
     //metodo para registrar local
     public void clickRegEstacionamiento(View v){
 
-        Toast.makeText(RegEstacionamientoActivity.this, "Registrando...Espere un momento", Toast.LENGTH_LONG).show();
+        Toast.makeText(RegEstacionamientoActivity.this, "Actualizando...Espere un momento", Toast.LENGTH_LONG).show();
         final ParseGeoPoint point = new ParseGeoPoint(addMarker.getPosition().latitude,addMarker.getPosition().longitude);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
-
-// Retrieve the object by id
-        Log.e("getId() regEst",controlador.getUsuario().getId());
-        query.getInBackground(controlador.getUsuario().getId(), new GetCallback<ParseObject>() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Empresa");
+        query.getInBackground(controlador.getUsuario().getUserId(), new GetCallback<ParseObject>() {
             public void done(ParseObject estacionamiento, ParseException e) {
                 if (e == null) {
+                    Log.e("asdas","asdasd");
                     estacionamiento.put("capacidad", Integer.parseInt(txtCapacidad.getText().toString()));
                     estacionamiento.put("tarifa", Integer.parseInt(txtTarifa.getText().toString()));
                     estacionamiento.put("ubicacion",point);
@@ -103,15 +101,17 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                Toast.makeText(RegEstacionamientoActivity.this, "Registrado!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegEstacionamientoActivity.this, "Actualizado!!", Toast.LENGTH_SHORT).show();
                                 //onBackPressed();
                             }
                             else
                                 Toast.makeText(RegEstacionamientoActivity.this, "No se pudo registrar", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-            }
+                }else{
+                    e.printStackTrace();
+                    Toast.makeText(RegEstacionamientoActivity.this, "No se pudo registrar", Toast.LENGTH_SHORT).show();
+            }}
         });
 
         /*ParseObject estacionamiento = new ParseObject("Empresa");

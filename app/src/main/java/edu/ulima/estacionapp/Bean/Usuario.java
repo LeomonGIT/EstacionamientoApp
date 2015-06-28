@@ -5,6 +5,7 @@ public class Usuario {
     String nombre;
     String correo;
     int type;
+    String userId;
     String id;
     public Usuario(){}
     public Usuario(String nombre, String correo, int type) {
@@ -43,5 +44,13 @@ public class Usuario {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

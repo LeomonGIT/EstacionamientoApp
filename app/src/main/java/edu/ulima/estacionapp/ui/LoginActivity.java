@@ -69,12 +69,13 @@ public class LoginActivity extends ActionBarActivity {
 
             }
         }, 200);
-        if (user != null && pass != null) {
+        if (!user.equalsIgnoreCase("") && !pass.equalsIgnoreCase("")) {
             Log.e("user/pass", user + "/" + pass);
             ParseUser.logInInBackground(user, pass, new LogInCallback() {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
-                    if (parseUser != null){
+                    if (e == null){
+
                         controlador.setUsuario(new Usuario(parseUser.getUsername(),parseUser.getEmail(),parseUser.getInt("type")));
                         Log.e("setearid user", parseUser.getObjectId().toString());
                         controlador.getUsuario().setId(parseUser.getObjectId().toString());

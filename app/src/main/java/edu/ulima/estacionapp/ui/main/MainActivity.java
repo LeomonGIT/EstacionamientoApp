@@ -10,9 +10,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 import edu.ulima.estacionapp.R;
 import edu.ulima.estacionapp.Servicios.UserController;
@@ -38,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instance=UserController.getInstance();
+        getUserEntityFromParse();
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         fm =getSupportFragmentManager();
@@ -109,18 +119,24 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private void getUserEntityFromParse(){
+        String tabla;
+        ParseUser obj = ParseUser.getCurrentUser();//("User",UserController.getInstance().getUsuario().getId());
+        if(UserController.getInstance().getUsuario().getType()==0)
+            tabla="Cliente";
+        else
+            tabla="Empresa";
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(tabla);
+        query.whereEqualTo("idUser",obj);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    if(scoreList.size()>0)
+                    UserController.getInstance().getUsuario().setUserId(scoreList.get(0).getObjectId());
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 }
