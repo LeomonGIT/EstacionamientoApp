@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:id="@+id/img_titulo"
+        android:background="@null"
         android:layout_gravity="center"
         android:src="@drawable/login_icon"
         android:paddingBottom="200dp"

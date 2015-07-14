@@ -197,8 +197,6 @@ public class MapActivity extends Fragment {
     }
 
     public void openVisaNet() {
-        Log.e("TransactionId", "numeroPedidoResponse.getLvfNroRecibo()");
-        Log.e("MerchantId","numeroPedidoResponse.getLvfCodComer()");
 
         String transactionId = "123123";
         String externalTransactionId = "";
