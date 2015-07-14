@@ -52,10 +52,8 @@
             android:theme="@style/AppThemeItem" >
         </activity>
         <activity
-            android:name=".ui.items.ReservarActivity"
-            android:label="@string/title_activity_reservar"
-            android:theme="@style/AppThemeItem" >
-        </activity>
+            android:name="pe.com.visanet.lib.VisaNetPaymentActivity"
+            android:theme="@style/VisaDialog" />
     </application>
 
 </manifest>

@@ -1,15 +1,14 @@
 package edu.ulima.estacionapp.ui.items;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +30,20 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.ulima.estacionapp.Bean.Empresa;
 import edu.ulima.estacionapp.R;
-import edu.ulima.estacionapp.Servicios.UserController;
+import pe.com.visanet.lib.VisaNetConfigurationContext;
+import pe.com.visanet.lib.VisaNetPaymentActivity;
+import pe.com.visanet.lib.VisaNetPaymentInfo;
 
 public class MapActivity extends Fragment {
 
+
+    private static final String TAG = "VISANET";
+    private static int REQUEST_CODE_PAYMENT = 1;
     private GoogleMap googleMap; // Might be null if Google Play services APK is not available.
     String temp="";
     List<Empresa> empresas = new ArrayList<>();
@@ -141,7 +146,7 @@ public class MapActivity extends Fragment {
         TextView txtDisponibilidad = (TextView) v.findViewById(R.id.txtReservaDisponible);
 
         txtCapacidad.setText(empresaDialog.getCapacidad());
-        txtDisponibilidad.setText(""+empresaDialog.getDisponibilidad());
+        txtDisponibilidad.setText("" + empresaDialog.getDisponibilidad());
         txtNombre.setText(empresaDialog.getNombre());
         txtTarifa.setText(empresaDialog.getTarifa());
 
@@ -149,14 +154,15 @@ public class MapActivity extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 registrarReserva();
+
                 dialog.dismiss();
             }
         });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Pagar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                openVisaNet();
                 dialog.dismiss();
             }
         });
@@ -170,7 +176,6 @@ public class MapActivity extends Fragment {
         query.getInBackground(empresaDialog.getIdEmpresa(), new GetCallback<ParseObject>() {
             public void done(ParseObject estacionamiento, ParseException e) {
                 if (e == null) {
-                    Log.e("asdas", "asdasd");
                     estacionamiento.put("disponible",empresaDialog.getDisponibilidad()-1);
                     estacionamiento.saveInBackground(new SaveCallback() {
                         @Override
@@ -189,7 +194,79 @@ public class MapActivity extends Fragment {
                     Toast.makeText(getActivity(), "Ocurrio un error al reservar", Toast.LENGTH_SHORT).show();
                 }}
         });
-
     }
 
+    public void openVisaNet() {
+        Log.e("TransactionId", "numeroPedidoResponse.getLvfNroRecibo()");
+        Log.e("MerchantId","numeroPedidoResponse.getLvfCodComer()");
+
+        String transactionId = "123123";
+        String externalTransactionId = "";
+        String merchantId = "123123";
+
+        VisaNetConfigurationContext ctx = new VisaNetConfigurationContext();
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("stage", "development");
+
+        ctx.setData(data);
+        ctx.setMerchantId(merchantId);
+        ctx.setApikey("c2f94210-8bdf-11e3-baa8-0800200c9a66");
+        ctx.setEndPointURL("https://devapps.vnmpos.com/ecore.gateway/api/v1/transactions");
+        ctx.setCurrency(VisaNetConfigurationContext.VisaNetCurrency.PEN);
+        ctx.setAmount(Double.parseDouble(empresaDialog.getTarifa()));
+        ctx.setTransactionId(transactionId);
+        ctx.setExternalTransactionId(externalTransactionId);
+        //ctx.setUserTokenId(userTokenId);
+        Intent intent = new Intent(getActivity(), VisaNetPaymentActivity.class);
+        intent.putExtra(VisaNetConfigurationContext.VISANET_CONTEXT, ctx);
+        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                /*EditText edtProduct = (EditText) findViewById(R.id.editTextProducto);
+                String product = edtProduct.getText().toString();*/
+                String product ="Producto";
+
+                VisaNetPaymentInfo info = (VisaNetPaymentInfo) data.getSerializableExtra(VisaNetConfigurationContext.VISANET_CONTEXT);
+                Log.i(TAG, "TransactionId: " + info.getTransactionId());
+                String email = info.getEmail();
+                String firstName = info.getFirstName();
+                String lastName = info.getLastName();
+
+                String codAccion = info.getData().get("CODACCION");
+                Log.i(TAG, "codAccion: " + codAccion);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle("Resultado");
+                alertDialog.setMessage(String.format("Número Orden: %s\nResultado: %s\nMotivo: %s\nTarjeta: %s\nImporte: %s\nProducto: %s\nCliente: %s %s\nEmail: %s",
+                        info.getData().get("NUMORDEN"),
+                        info.getData().get("CODACCION").equals("000") ? "Aprobado" : "Denegado",
+                        info.getData().get("DSC_COD_ACCION"),
+                        info.getData().get("PAN"),
+                        info.getData().get("IMP_AUTORIZADO"),
+                        product,
+                        firstName,
+                        lastName,
+                        email));
+                alertDialog.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        });
+                alertDialog.show();
+
+                Toast.makeText(
+                        getActivity(),
+                        "Payment Information received from VisaNet" + info.getTransactionId(), Toast.LENGTH_LONG)
+                        .show();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i(TAG, "The user canceled.");
+            }
+        }
+    }
 }

@@ -1,0 +1,135 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pe.com.visanet.sampleapp.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <Button
+        android:id="@+id/btnPayNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="btnPayNow" />
+
+    <ImageView
+        android:id="@+id/imageBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Descripcion"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/imagePos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageBanner"
+        android:layout_below="@+id/imageBanner"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Descripcion"
+        android:src="@drawable/ic_home" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imageBanner"
+        android:layout_below="@+id/imageBanner"
+        android:layout_toRightOf="@+id/imagePos"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvMerchantId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cod_comercio" />
+
+        <EditText
+            android:id="@+id/editTextMerchantId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="cod_comercio"
+            android:inputType="number"
+            android:padding="5dp"
+            android:text="default_merchant_id" />
+
+        <TextView
+            android:id="@+id/tvUserTokenId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user_token" />
+
+        <EditText
+            android:id="@+id/editUserTokenId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="user_token"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text="default_user_token_id" />
+
+        <TextView
+            android:id="@+id/tvPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pedido" />
+
+        <EditText
+            android:id="@+id/editTextPurchaseOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Hint pedido"
+            android:inputType="number"
+            android:padding="5dp"
+            android:text="Pedido Inicial" />
+
+        <TextView
+            android:id="@+id/tvProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pedido" />
+
+        <EditText
+            android:id="@+id/editTextProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="producto"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tvMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="monto" />
+
+        <EditText
+            android:id="@+id/editTextAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="monto"
+            android:inputType="numberDecimal"
+            android:padding="5dp"
+            android:text="montoInicial" />
+
+        <CheckBox
+            android:id="@+id/checkboxTesting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="testing" />
+    </LinearLayout>
+
+</RelativeLayout>

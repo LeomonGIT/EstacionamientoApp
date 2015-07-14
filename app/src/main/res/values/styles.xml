@@ -22,4 +22,20 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
     </style>
+
+    <style name="VisaDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:dividerHeight">@dimen/v_metric_04</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+    </style>
+
+    <style name="EditTextStyle" parent="EditTextStyle.Base"/>
+
+    <style name="EditTextStyle.Base"  parent="Base.Widget.AppCompat.EditText">
+        <item name="android:paddingTop">@dimen/v_metric_03</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:textSize">@dimen/t_metric_08</item>
+    </style>
 </resources>

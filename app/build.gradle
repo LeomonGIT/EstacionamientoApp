@@ -33,4 +33,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile files('libs/visanetlib-1.0.20.jar')
 }
