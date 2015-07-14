@@ -30,11 +30,13 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import edu.ulima.estacionapp.Bean.Empresa;
 import edu.ulima.estacionapp.R;
+import edu.ulima.estacionapp.Servicios.UserController;
 import pe.com.visanet.lib.VisaNetConfigurationContext;
 import pe.com.visanet.lib.VisaNetPaymentActivity;
 import pe.com.visanet.lib.VisaNetPaymentInfo;
@@ -153,7 +155,8 @@ public class MapActivity extends Fragment {
         builder.setPositiveButton("Reservar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                registrarReserva();
+                registrarReserva("reserva");
+                Toast.makeText(getActivity(), "Reservando...", Toast.LENGTH_LONG).show();
 
                 dialog.dismiss();
             }
@@ -170,43 +173,66 @@ public class MapActivity extends Fragment {
         return builder.create();
     }
 
-    private void registrarReserva(){
+    private void registrarReserva(String tipo){
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Empresa");
         query.getInBackground(empresaDialog.getIdEmpresa(), new GetCallback<ParseObject>() {
             public void done(ParseObject estacionamiento, ParseException e) {
                 if (e == null) {
-                    estacionamiento.put("disponible",empresaDialog.getDisponibilidad()-1);
+                    estacionamiento.put("disponible", empresaDialog.getDisponibilidad() - 1);
                     estacionamiento.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                empresas.get(empresaDialog.getPosition()).setDisponibilidad(empresaDialog.getDisponibilidad()-1);
-                                Toast.makeText(getActivity(), "Reservado", Toast.LENGTH_LONG).show();
+                                empresas.get(empresaDialog.getPosition()).setDisponibilidad(empresaDialog.getDisponibilidad() - 1);
                                 //onBackPressed();
-                            }
-                            else
+                            } else
                                 Toast.makeText(getActivity(), "No se pudo Reservar", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }else{
+                } else {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Ocurrio un error al reservar", Toast.LENGTH_SHORT).show();
-                }}
+                }
+            }
+        });
+
+        ParseObject queryReserva = new ParseObject("Reserva");
+        ParseObject user = ParseObject.createWithoutData("_User", UserController.getInstance().getUsuario().getId());
+        queryReserva.put("idUser", user);
+        ParseObject emp = ParseObject.createWithoutData("Empresa", empresaDialog.getIdEmpresa());
+        queryReserva.put("idEmpresa", emp);
+        queryReserva.put("tipo", tipo);
+        queryReserva.put("fecha_reserva", date());
+        queryReserva.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e==null) {
+                    Toast.makeText(getActivity(), "Reservado", Toast.LENGTH_LONG).show();
+                    Log.e("Reserva", "guardado");
+                }else {
+                    e.printStackTrace();
+                    Log.e("Reserva", "no se guardo");
+                }
+            }
         });
     }
 
+    private Date date(){
+        Date now = new Date();
+        now.getTime();
+        long diff = now.getTime();
+        now.setTime(diff-18000000);
+        return now;
+    }
     public void openVisaNet() {
 
         String transactionId = "123123";
         String externalTransactionId = "";
         String merchantId = "123123";
-
         VisaNetConfigurationContext ctx = new VisaNetConfigurationContext();
-
         HashMap<String, String> data = new HashMap<>();
         data.put("stage", "development");
-
         ctx.setData(data);
         ctx.setMerchantId(merchantId);
         ctx.setApikey("c2f94210-8bdf-11e3-baa8-0800200c9a66");
@@ -225,11 +251,9 @@ public class MapActivity extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
-
                 /*EditText edtProduct = (EditText) findViewById(R.id.editTextProducto);
                 String product = edtProduct.getText().toString();*/
-                String product ="Producto";
-
+                String product ="Pago Reserva";
                 VisaNetPaymentInfo info = (VisaNetPaymentInfo) data.getSerializableExtra(VisaNetConfigurationContext.VISANET_CONTEXT);
                 Log.i(TAG, "TransactionId: " + info.getTransactionId());
                 String email = info.getEmail();
@@ -240,9 +264,10 @@ public class MapActivity extends Fragment {
                 Log.i(TAG, "codAccion: " + codAccion);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setTitle("Resultado");
-                alertDialog.setMessage(String.format("Número Orden: %s\nResultado: %s\nMotivo: %s\nTarjeta: %s\nImporte: %s\nProducto: %s\nCliente: %s %s\nEmail: %s",
+                alertDialog.setMessage(String.format("Numero Orden: %s\nResultado: %s\nMotivo: %s\nTarjeta: %s\nImporte: %s\nProducto: %s\nCliente: %s %s\nEmail: %s",
                         info.getData().get("NUMORDEN"),
-                        info.getData().get("CODACCION").equals("000") ? "Aprobado" : "Denegado",
+                        //info.getData().get("CODACCION").equals("000") ? "Aprobado" : "Denegado",
+                        info.getData().get("CODACCION").equals("000") ? "Aprobado" : "Aprobado",
                         info.getData().get("DSC_COD_ACCION"),
                         info.getData().get("PAN"),
                         info.getData().get("IMP_AUTORIZADO"),
@@ -257,10 +282,10 @@ public class MapActivity extends Fragment {
                             }
                         });
                 alertDialog.show();
-
+                registrarReserva("pago");
                 Toast.makeText(
                         getActivity(),
-                        "Payment Information received from VisaNet" + info.getTransactionId(), Toast.LENGTH_LONG)
+                        "Pago realizado" + info.getTransactionId(), Toast.LENGTH_LONG)
                         .show();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Log.i(TAG, "The user canceled.");
