@@ -1,14 +1,10 @@
 package edu.ulima.estacionapp.ui.items;
 
 import android.graphics.drawable.ColorDrawable;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -55,7 +51,6 @@ public class RegEstacionamientoActivity extends ActionBarActivity {
 
         //logica getPositionOnTouchMap
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
             @Override
             public void onMapClick(LatLng point) {
                 if (addMarker != null)
