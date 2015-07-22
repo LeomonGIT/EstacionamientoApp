@@ -140,7 +140,6 @@ public class MapActivity extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.reservar_dialog, null);
-        Log.e("EmpresaDialog",empresaDialog.toString());
         builder.setView(v);
         TextView txtNombre = (TextView) v.findViewById(R.id.txtRevervaEmpresa);
         TextView txtTarifa = (TextView) v.findViewById(R.id.txtRevervaTarifa);

@@ -36,20 +36,22 @@ public class ConectorParse {
                     ArrayList<Reserve> temp = new ArrayList<>();
                     for(ParseObject object : list){
                         Reserve reserve = null;
-                        //try {
-                            reserve = new Reserve(object.getObjectId().toString(),object.get("idEmpresa").toString()
-                                    ,object.get("idUser").toString(),object.get("tipo").toString()
-                                    //,formatter.parse(object.get("fecha_reserva").toString())
-                                    ,null
+                        try {
+                            reserve = new Reserve(object.getObjectId().toString()
+                                    ,object.getParseObject("idEmpresa").getObjectId().toString()
+                                    ,object.getParseObject("idUser").getObjectId().toString()
+                                    ,object.get("tipo").toString()
+                                    ,formatter.parse(object.get("fecha_reserva").toString())
+                                    //,null
                                     //,formatter.parse(object.get("fecha_expiracion").toString())
                                     ,null
                                     ,"cliente");
-                        /*} catch (java.text.ParseException e1) {
-                            //e1.printStackTrace();
-                            Log.e("ParseException","error en: " + object.toString());
-                        }*/
+                            Log.e("Add to array is:", reserve.toString());
+                        } catch (java.text.ParseException e1) {
+                            e1.printStackTrace();
+                            //Log.e("ParseException","error en: " + object.toString());
+                        }
                         temp.add(reserve);
-                        Log.e("Add to array is:", reserve.toString());
                     }
                     controller.setReserve(temp);
                     conectorIF.onFinishParse();
