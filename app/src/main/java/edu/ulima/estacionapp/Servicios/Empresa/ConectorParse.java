@@ -30,6 +30,9 @@ public class ConectorParse {
 
     public void getAllReserve(){
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("Reserva");
+        Log.e("idEmpr",EmpresaController.getInstance().getEmpresa().getIdEmpresa());
+        ParseObject empresa = ParseObject.createWithoutData("Empresa", EmpresaController.getInstance().getEmpresa().getIdEmpresa());
+        query.whereEqualTo("idEmpresa",empresa);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -58,7 +61,9 @@ public class ConectorParse {
                     }
                     controller.setReserve(temp);
                     conectorIF.onFinishParse();
-                }else
+                }else if(e!=null)
+                    e.printStackTrace();
+                else
                     Log.e("getAllReserve","error en findInBackground");
             }
         });
@@ -75,7 +80,7 @@ public class ConectorParse {
 
     private void completeReserveParse(String idUser){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cliente");
-        ParseObject user = ParseObject.createWithoutData("_User",idUser);
+        ParseObject user = ParseObject.createWithoutData("_User", idUser);
         query.whereEqualTo("idUser", user);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override

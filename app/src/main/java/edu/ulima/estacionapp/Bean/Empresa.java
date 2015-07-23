@@ -13,6 +13,14 @@ public class Empresa {
     String markerId;
     int position;
 
+    public Empresa() {
+    }
+
+    public Empresa(String idEmpresa, String nombre) {
+        this.idEmpresa = idEmpresa;
+        this.nombre = nombre;
+    }
+
     public int getPosition() {
         return position;
     }

@@ -14,12 +14,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
+import edu.ulima.estacionapp.Bean.Cliente;
+import edu.ulima.estacionapp.Bean.Empresa;
 import edu.ulima.estacionapp.Bean.Usuario;
 import edu.ulima.estacionapp.R;
+import edu.ulima.estacionapp.Servicios.ClienteController;
+import edu.ulima.estacionapp.Servicios.Empresa.EmpresaController;
 import edu.ulima.estacionapp.Servicios.UserController;
 import edu.ulima.estacionapp.ui.main.MainActivity;
 
@@ -75,12 +84,15 @@ public class LoginActivity extends ActionBarActivity {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
                     if (e == null){
-                        controlador.setUsuario(new Usuario(parseUser.getUsername(),parseUser.getEmail(),parseUser.getInt("type")));
+                        controlador.setUsuario(new Usuario(parseUser.getUsername(), parseUser.getEmail(), parseUser.getInt("type")));
                         controlador.getUsuario().setId(parseUser.getObjectId().toString());
+
                         login(controlador.getUsuario());
-                    }else
+                    }else{
                         Toast.makeText(LoginActivity.this,"Usuario y/o Clave no valido",Toast.LENGTH_LONG).show();
                     pd.dismiss();
+                    }
+
                 }
         });
         }
@@ -95,21 +107,43 @@ public class LoginActivity extends ActionBarActivity {
         switch (user.getType()){
             case 0:
                 i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);pd.dismiss();
                 break;
             case 1:
                 i = new Intent(LoginActivity.this, MainActivity.class);
+                saveEmpresa(i);
                 break;
             case 2:
                 i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);pd.dismiss();
                 break;
             default:
                 break;
         }
-        startActivity(i);
     };
 
     public void clickToRegistrarUser(View view){
         Intent i = new Intent(LoginActivity.this,RegistrarUserActivity.class);
         startActivity(i);
+    }
+
+    private void saveEmpresa(final Intent i){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Empresa");
+        ParseObject user = ParseObject.createWithoutData("_User", UserController.getInstance().getUsuario().getId());
+        query.whereEqualTo("idUser", user);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null && list.size()>0) {
+                    Log.e("ligin",list.get(0).getObjectId().toString());
+                    Empresa empresa = new Empresa(list.get(0).getObjectId().toString(),
+                            list.get(0).get("nombre").toString());
+                    EmpresaController.getInstance().setEmpresa(empresa);
+                    startActivity(i);
+                    pd.dismiss();
+                }
+                pd.dismiss();
+            }
+        });
     }
 }

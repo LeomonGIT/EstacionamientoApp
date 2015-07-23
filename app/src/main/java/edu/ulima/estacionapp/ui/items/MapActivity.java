@@ -86,19 +86,17 @@ public class MapActivity extends Fragment {
 
     private void iniciarCliente() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cliente");
-        Log.e("UserContro",UserController.getInstance().getUsuario().getId());
         ParseObject user = ParseObject.createWithoutData("_User",UserController.getInstance().getUsuario().getId());
         query.whereEqualTo("idUser", user);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                if (e == null && list != null) {
+                if (e == null && list.size()>0) {
                     Cliente cliente = new Cliente(list.get(0).getObjectId().toString(),
                             list.get(0).get("nombre").toString(),
                             list.get(0).get("placa").toString());
                     ClienteController.setCliente(cliente);
-                } else
-                    e.printStackTrace();
+                }
             }
         });
     }
