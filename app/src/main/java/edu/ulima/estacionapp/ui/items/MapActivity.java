@@ -34,8 +34,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ulima.estacionapp.Bean.Cliente;
 import edu.ulima.estacionapp.Bean.Empresa;
 import edu.ulima.estacionapp.R;
+import edu.ulima.estacionapp.Servicios.ClienteController;
 import edu.ulima.estacionapp.Servicios.UserController;
 import pe.com.visanet.lib.VisaNetConfigurationContext;
 import pe.com.visanet.lib.VisaNetPaymentActivity;
@@ -78,7 +80,27 @@ public class MapActivity extends Fragment {
         });
         iniciarPosition();
         getParkingFromParse();
+        iniciarCliente();
         return myFragmentView;
+    }
+
+    private void iniciarCliente() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cliente");
+        Log.e("UserContro",UserController.getInstance().getUsuario().getId());
+        ParseObject user = ParseObject.createWithoutData("_User",UserController.getInstance().getUsuario().getId());
+        query.whereEqualTo("idUser", user);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null && list != null) {
+                    Cliente cliente = new Cliente(list.get(0).getObjectId().toString(),
+                            list.get(0).get("nombre").toString(),
+                            list.get(0).get("placa").toString());
+                    ClienteController.setCliente(cliente);
+                } else
+                    e.printStackTrace();
+            }
+        });
     }
 
     private void iniciarPosition() {
@@ -202,6 +224,8 @@ public class MapActivity extends Fragment {
         ParseObject emp = ParseObject.createWithoutData("Empresa", empresaDialog.getIdEmpresa());
         queryReserva.put("idEmpresa", emp);
         queryReserva.put("tipo", tipo);
+        queryReserva.put("nombreCliente",ClienteController.getInstance().getCliente().getNombre());
+        queryReserva.put("placa",ClienteController.getInstance().getCliente().getPlaca());
         queryReserva.put("fecha_reserva", date());
         queryReserva.saveInBackground(new SaveCallback() {
             @Override

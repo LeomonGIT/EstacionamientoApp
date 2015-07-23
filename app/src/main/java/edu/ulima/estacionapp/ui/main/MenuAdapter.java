@@ -3,7 +3,6 @@ package edu.ulima.estacionapp.ui.main;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,8 +18,7 @@ import android.widget.Toast;
 
 import edu.ulima.estacionapp.R;
 import edu.ulima.estacionapp.Servicios.UserController;
-import edu.ulima.estacionapp.ui.items.ClienteVerReservasActivity;
-import edu.ulima.estacionapp.ui.items.RegEstacionamientoActivity;
+import edu.ulima.estacionapp.ui.items.Empresa.RegEstacionamientoActivity;
 
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {

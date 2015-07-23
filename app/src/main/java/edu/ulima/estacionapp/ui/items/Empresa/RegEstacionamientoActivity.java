@@ -1,4 +1,4 @@
-package edu.ulima.estacionapp.ui.items;
+package edu.ulima.estacionapp.ui.items.Empresa;
 
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;

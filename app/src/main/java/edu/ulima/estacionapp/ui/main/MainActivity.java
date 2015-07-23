@@ -11,8 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.parse.FindCallback;
@@ -25,7 +23,7 @@ import java.util.List;
 
 import edu.ulima.estacionapp.R;
 import edu.ulima.estacionapp.Servicios.UserController;
-import edu.ulima.estacionapp.ui.items.EmpresaListaReservasFragment;
+import edu.ulima.estacionapp.ui.items.Empresa.EmpresaListaReservasFragment;
 import edu.ulima.estacionapp.ui.items.MapActivity;
 
 

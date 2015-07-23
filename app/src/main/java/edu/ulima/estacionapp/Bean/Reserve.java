@@ -7,11 +7,11 @@ import java.util.Date;
  */
 public class Reserve {
 
-    String idReserve,idEmpresa,idCliente,tipoReserva;
-    Date inicioReserva,expiraReserva;
-    String nombreCliente;
+    String idReserve,idEmpresa,idCliente,tipoReserva,inicioReserva;
+    Date expiraReserva;
+    String nombreCliente,placaAuto;
 
-    public Reserve(String idReserve,String idEmpresa, String idCliente, String tipoReserva, Date inicioReserva, Date expiraReserva, String nombreCliente) {
+    public Reserve(String idReserve, String idEmpresa, String idCliente, String tipoReserva, String inicioReserva, Date expiraReserva, String nombreCliente, String placaAuto) {
         this.idReserve = idReserve;
         this.idEmpresa = idEmpresa;
         this.idCliente = idCliente;
@@ -19,19 +19,29 @@ public class Reserve {
         this.inicioReserva = inicioReserva;
         this.expiraReserva = expiraReserva;
         this.nombreCliente = nombreCliente;
+        this.placaAuto = placaAuto;
     }
 
     @Override
     public String toString() {
         return "Reserve{" +
-                "  idReserve='" + idReserve+  '\'' +
+                "idReserve='" + idReserve + '\'' +
                 ", idEmpresa='" + idEmpresa + '\'' +
                 ", idCliente='" + idCliente + '\'' +
                 ", tipoReserva='" + tipoReserva + '\'' +
-                ", inicioReserva=" + inicioReserva +
+                ", inicioReserva='" + inicioReserva + '\'' +
                 ", expiraReserva=" + expiraReserva +
                 ", nombreCliente='" + nombreCliente + '\'' +
+                ", placaAuto='" + placaAuto + '\'' +
                 '}';
+    }
+
+    public String getInicioReserva() {
+        return inicioReserva;
+    }
+
+    public void setInicioReserva(String inicioReserva) {
+        this.inicioReserva = inicioReserva;
     }
 
     public String getIdReserve() {
@@ -66,13 +76,6 @@ public class Reserve {
         this.tipoReserva = tipoReserva;
     }
 
-    public Date getInicioReserva() {
-        return inicioReserva;
-    }
-
-    public void setInicioReserva(Date inicioReserva) {
-        this.inicioReserva = inicioReserva;
-    }
 
     public Date getExpiraReserva() {
         return expiraReserva;
@@ -88,5 +91,13 @@ public class Reserve {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
+    }
+
+    public String getPlacaAuto() {
+        return placaAuto;
+    }
+
+    public void setPlacaAuto(String placaAuto) {
+        this.placaAuto = placaAuto;
     }
 }

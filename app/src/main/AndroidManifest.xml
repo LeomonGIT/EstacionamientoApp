@@ -48,7 +48,7 @@
             android:label="@string/title_activity_cliente_ver_reservas" >
         </activity>
         <activity
-            android:name=".ui.items.RegEstacionamientoActivity"
+            android:name=".ui.items.Empresa.RegEstacionamientoActivity"
             android:label="@string/title_activity_reg_estacionamiento"
             android:theme="@style/AppThemeItem" >
         </activity>
