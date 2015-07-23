@@ -243,7 +243,7 @@ public class MapActivity extends Fragment {
         Date now = new Date();
         now.getTime();
         long diff = now.getTime();
-        now.setTime(diff-18000000);
+        //now.setTime(diff-18000000);
         return now;
     }
     public void openVisaNet() {
